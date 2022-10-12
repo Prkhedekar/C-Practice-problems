@@ -3,25 +3,19 @@
 #define TRUE 1
 #define FALSE 0
 
+//8. Concatenate two integer values using macros
+#define CONCATENATE_INTEGER(X,Y) X##Y
 
-/*--------------------------------------Day 2----------------------------------*/
+//9. Find square of a number using macros.
+#define SQUARE_USING_MACRO(X) X*X
 
-int sum_of_digits(int num);
-int reverse_number(int num);
-int occurrence_of_number(int num, int digit);
-int palindrome_number(int num);
-int is_prime(int num);
-int generate_n_prime_numbers(int n);
-int sum_of_series();
-int is_armstrong();
-int cube(int n);
-int is_amicable(int num1, int num2);
-int sum_of_proper_divisors(int num);
-int calculator();
-int volume_of_shapes(int choice);
-int cube_volume(int length);
-int cuboid(int height, int length, int width);
-int sphere(int radius);
-int cylinder(int height, int radius);
-int cone(int height, int radius);
-float electricity_bill(int units_consumed);
+
+/*--------------------------------------Day 3----------------------------------*/
+int binary_to_decimal(int binary_number);
+int decimal_to_binary(int decimal_number);
+int generate_sum_of_previous_three_numbers(int sequence_length);
+int generate_pattern(int rows);
+int two_digit_multiple_of_seven();
+int power_using_recursion(int base,int exponent);
+int factorial_of_number_using_recursion(int number);
+int mathematical_functions();

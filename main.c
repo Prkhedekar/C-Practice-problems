@@ -2,119 +2,90 @@
 #include<stdio.h>
 #include"header.h"
 
-/*--------------------------------------Day 2----------------------------------*/
+/*--------------------------------------Day 3----------------------------------*/
+
 int main()
 {
-    int choice; // Variable for Question 10.
-    int units_consumed = 0; // Variable for Question 11.
+    //variables
+    int base,exponent; // Q5.Power using recursion.
 
-
-    //1. Enter a 5 digit number and find the sum of its digits.
-    printf("\n\n 1. Enter a 5 digit number and find the sum of its digits.\n    For E.g. if int number = 12345; then sum = 15;\n");
+    //1. WAP to convert a binary number to decimal and vice versa.
+    printf("\n\n 1. WAP to convert a binary number to decimal and vice versa.\n");
     printf("\n\tNote : Tested using Assertion.\n");
 
-    assert(sum_of_digits(12345) == 15);
-    assert(sum_of_digits(0) == 0);
-    assert(sum_of_digits(30) == 3);
-    assert(sum_of_digits(-1) == INVALID);
+    // Binary to Decimal
+    assert(binary_to_decimal(101) == 5);
+    assert(binary_to_decimal(1111) == 15);
+    assert(binary_to_decimal(123) == INVALID);
+    assert(binary_to_decimal(-20) == INVALID);
 
-    //2. Write a program to reverse the number.
-    printf("\n\n 2. Write a program to reverse the number. For E.g. If int number = 12345; then the \n    output reverse = 54321;\n");
+    // Decimal to Binary
+    assert(decimal_to_binary(5) == 101);
+    assert(decimal_to_binary(15) == 1111);
+    assert(decimal_to_binary(0) == 0);
+    assert(decimal_to_binary(-52) == INVALID);
+
+    //2. Generate a sequence of numbers such that every number in the sequence is the sum of
+    //   the previous three numbers. The first three numbers are 0,0,1.
+
+    printf("\n\n 2. Generate a sequence of numbers such that every number in the sequence is the\n    sum of the previous three numbers\n");
+    assert(generate_sum_of_previous_three_numbers(9) == 1);
+    assert(generate_sum_of_previous_three_numbers(3) == 1);
+    assert(generate_sum_of_previous_three_numbers(0) == INVALID);
+
+    //3. WAP to print the following sketch by taking in N as number of rows
+
+    printf("\n\n 3. WAP to print the following sketch by taking in N as number of rows\n\n");
+    assert(generate_pattern(7) == 1);
+    assert(generate_pattern(-1) == INVALID);
+
+
+    //4. Write a C program, which will print two digit numbers whose sum of both digit is
+    //   multiple of seven. e.g. 16,25,34......
+
+    printf("\n\n 4. Write a C program, which will print two digit numbers whose sum of both digit \n    is multiple of seven. e.g. 16,25,34......\n");
+    assert(two_digit_multiple_of_seven() == 1);
+
+    //5. Write a recursive function for calculating power of a number. Take base number and exponent from user.
+
+
+    printf("\n\tEnter Base Number                        : ");
+    scanf("%d", &base);
+    printf("\n\tEnter Exponent                           : ");
+    scanf("%d", &exponent);
+    printf("\n\tPower                                    : %d", power_using_recursion(base,exponent));
+    assert(power_using_recursion(10,2) == 100);
+    assert(power_using_recursion(-2,5) == INVALID);
+
+
+    //6. Write a recursive function for calculating factorial of a number.
+    printf("\n\n 6. Write a recursive function for calculating factorial of a number.\n");
     printf("\n\tNote : Tested using Assertion.\n");
+    assert(factorial_of_number_using_recursion(5) == 120);
+    assert(factorial_of_number_using_recursion(1) == 1);
+    assert(factorial_of_number_using_recursion(0) == 1);
+    assert(factorial_of_number_using_recursion(-10) == INVALID);
 
-    assert(reverse_number(12345) == 54321);
-    assert(reverse_number(0) == 0);
-    assert(reverse_number(5409) == 9045);
-    assert(reverse_number(-50) == INVALID);
+    //7. Use recursive calls to evaluate F(x) = x + x3/3! + x5/5! + x7/7!+ …
+    printf("\n\n 7. Use recursive calls to evaluate F(x) = x + x3/3! + x5/5! + x7/7!+ …\n");
 
-    //3. Write a program to count the occurrences of digit in a number
-    printf("\n\n 3. Write a program to count the occurrences of digit in a number\n");
+
+    //8. Concatenate two integer values using macros
+    printf("\n\n 8. Concatenate two integer values using macros\n");
     printf("\n\tNote : Tested using Assertion.\n");
+    assert(CONCATENATE_INTEGER(10,13) == 1013);
+    assert(CONCATENATE_INTEGER(20,19) == 2019);
 
-    assert(occurrence_of_number(11223,2) == 2);
-    assert(occurrence_of_number(11100051,1) == 4);
-    assert(occurrence_of_number(58,7) == 0);
-    assert(occurrence_of_number(0,1) == 0);
-    assert(occurrence_of_number(-32,7) == INVALID);
-
-    //4. WAP to check if a given number is a palindrome
-    printf("\n\n 4. WAP to check if a given number is a palindrome. For e.g. 12321, 56788765;\n");
+    //9. Find square of a number using macros.
+    printf("\n\n 9. Find square of a number using macros.\n");
     printf("\n\tNote : Tested using Assertion.\n");
+    assert(SQUARE_USING_MACRO(5) == 25);
+    assert(SQUARE_USING_MACRO(7) == 49);
 
-    assert(palindrome_number(12321) == TRUE);
-    assert(palindrome_number(56788765) == TRUE);
-    assert(palindrome_number(54689) == FALSE);
-    assert(palindrome_number(56788) == FALSE);
-    assert(palindrome_number(0) == TRUE);
-    assert(palindrome_number(-502) == INVALID);
-
-    //5. Generate the first 'N' prime numbers
-
-    printf("\n\n 5. Generate the first 'N' prime numbers.\n");
-    assert(generate_n_prime_numbers(5) == TRUE);
-    assert(generate_n_prime_numbers(10) == TRUE);
-    assert(generate_n_prime_numbers(0) == INVALID);
-    assert (generate_n_prime_numbers(-50) == INVALID);
-
-    //6. Write a C program to display and find the sum of the series 1+11+111+....111 up to n.
-    //   Take the value of 'n' as input from the user
-
-    printf("\n\n 6. Program to display and find the sum of the series 1+11+111+....111 up to n \n");
-    sum_of_series();
-
-    //7. A number is called an Armstrong number if the sum of the cubes of the digits of the
-    //   number is equal to the number. For example 153 = 1^3 + 5^3 + 3^3. Write a C
-    //   program that asks the user to enter a number and returns if it is Armstrong or not
-
-    printf("\n\n 7. Program that asks the user to enter a number and returns if it is Armstrong or not \n");
-    is_armstrong();
-
-    //8. Program to check that the input pair of numbers is amicable
-    printf("\n\n 8. Write a C program to check that the input pair of numbers is amicable\n");
-    printf("\n\tNote : Tested using Assertion.\n");
-
-    assert(is_amicable(220,284) == TRUE);
-    assert(is_amicable(284,220) == TRUE);
-    assert(is_amicable(50,600) == FALSE);
-    assert(is_amicable(-10, 20) == INVALID);
-
-    //9. Menu driven program to read two integers & find their sum, difference & product
-
-    printf("\n\n 9. Menu driven program to read two integers & find their sum, difference & product \n");
-    calculator();
-
-    //10.program to calculate the volume of the following shapes: Cube, Cuboid,
-    //   Sphere, Cylinder and Cone. Ask the user which one s/he wants to calculate, and take
-    //   the appropriate required inputs. Then print the result. The input should be taken in the
-    //   main function and calculations for every solid should be done in a separate function
-    //   by passing appropriate arguments.
-
-    printf("\n\n 10. program to calculate the volume of the following shapes: Cube, Cuboid, Sphere, Cylinder and Cone \n");
-    printf("\n\tCube                      : 1 ");
-    printf("\n\tCuboid                    : 2 ");
-    printf("\n\tSphere                    : 3 ");
-    printf("\n\tCylinder                  : 4 ");
-    printf("\n\tCone                      : 5 ");
-    printf("\n\tEnter your choice         : ");
-    scanf("%d", &choice);
-    volume_of_shapes(choice);
-
-    //11.. An Electricity board charges the following rates for use of electricity.
-    //For the First 200 units : Rs 1 per unit
-    //For the next 100 units : Rs 1.5 per unit
-    //Beyond 300 units : Rs 2 Per unit.
-    //Write a C Program to read no of unit consumed and print out total charge
-    //amount
-
-    printf("\n\n 11. Program to read no of unit consumed and print out total charge amount \n");
-    printf("\n\tUnits Consumed                    : ");
-    scanf("%d",&units_consumed);
-    electricity_bill(units_consumed);
-
-
-
-
-
+    //10. Write a menu driven program to display the mathematical functions like square root, natural log, log10x, power(x,n), Cos(x). (use math.h)
+    printf("\n\n 10. Write a menu driven program to display the mathematical functions like square root, natural log, log10x, power(x,n), Cos(x). (use math.h)\n");
+    assert(mathematical_functions() == 1);
+    assert(mathematical_functions() == 1);
 
     return 0;
 }
