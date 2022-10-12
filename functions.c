@@ -1,146 +1,383 @@
 #include "header.h"
-#include<math.h>
+#include <math.h>
+#include <stdio.h>
 
-/*--------------------------------------Day 1----------------------------------*/
+/*--------------------------------------Day 2----------------------------------*/
 
-//1. Function that converts upper case to lower
-
-char lower_case(char c)
+// 1. Enter a 5 digit number and find the sum of its digits.
+int sum_of_digits(int num)
 {
-    if(c >='A' && c <='Z') //Using ASCII value to determine if the character is in Upper Case
+    int sum = 0;
+    if(num > 0) //This function only works for positive integers
     {
-        return c = c + 32;
-    }
-    else if (c >='a' && c <='z') //Checking if character is lower case
-    {
-        return c;
-    }
-    else
-    {
-        return INVALID; //Return INVALID if the character is not valid
-    }
-
-}
-
-
-
-// 2. Function to calculate the area of circle
-
-int circle_area(float radius) //r -> Radius of a Circle
-{
-    if(radius>0){
-        return (int)PI*radius*radius; // Compute area only if radius is positive.
-    }
-    else
-    {
-        return INVALID;
-    }
-
-}
-
-
-
-// 3. Functions to calculate simple and compound interest.
-
-    // Function to find simple interest.
-int simple_interest(float principal, float timePeriod, float rateofInterest)
-{
-    if(principal >= 0 && timePeriod >= 0 && rateofInterest >=0) //calculate only if numbers are positive
-    {
-        return (int)(principal*timePeriod*rateofInterest)/100; //Simple Interest = p*t*r/100
-    }
-    else
-    {
-        return INVALID;
-    }
-}
-
-    // Function to find Compound Interest.
-int compound_interest(float principal, float timePeriod, float rateofInterest)
-{
-    if(principal >= 0 && timePeriod >= 0 && rateofInterest >=0) //calculate only if numbers are positive
-    {
-        return (int)principal*pow(1+rateofInterest/100,timePeriod)-principal;   //Compound Interest = p(1+r)^t
-    }
-    else
-    {
-        return INVALID;
-    }
-}
-
-
-// 4. Function to convert temperature from Celsius to Fahrenheit and Fahrenheit to Celsius
-
-// Fahrenheit to Celsius Conversion
-float fahrenheit_to_celsius(float f)
-{
-    float c;
-    c = (f-32)*5/9;
-    return c;
-}
-
-// Celsius to Fahrenheit Conversion
-float celsius_to_fahrenheit(float c)
-{
-    float f;
-    f = c*1.8 + 32;
-    return f;
-}
-
-
-// 5. Check if entered number is even or odd.
-
-int odd_or_even(int num) //return 2 if even, 1 if odd.
-{
-    if(num % 2 == 0)   //Checking if the number is even
-    {
-        return 2;
-    }
-    else
-    {
-       return 3;
-    }
-}
-
-
-// 6. Check if entered year is leap year or not.
-
-/* Leap year is a year which is perfectly divisible by 400,
-   or year is perfectly divisible by 4 and is not divisible
-   by 100 */
-int is_leap_year(int year) // Return 4 if year is leap year else return 3
-{
-    if (year >= 0 )  // Check if entered year is Valid
-    {
-        /*If the first operand of a logical-OR operation has a nonzero value,
-         the second operand is not evaluated.*/
-        if( (year % 400 == 0) || ((year % 4 == 0) && (year % 100 != 0)) )
+        while(num > 0)
         {
+            sum = sum + (num % 10); //(num % 10) returns last digit of the number
+            num = num / 10; // Remove last digit of the number
+        }
+        return sum;
+    }
+    else if(num == 0)
+    {
+        return 0;
+    }
+    else
+    {
+        return -1;
+    }
+
+}
+
+// 2. Function to reverse the number.
+int reverse_number(int num)
+{
+    if (num > 0) // This function only works for positive integers
+    {
+        int reverse_num = 0; // Variable to store reversed number.
+        while(num > 0)
+        {
+            reverse_num = reverse_num * 10 + (num % 10);
+            num = num / 10; //Remove the last digit
+        }
+        return reverse_num;
+    }
+    else if(num == 0)
+    {
+        return 0;
+    }
+    else
+    {
+        return INVALID;
+    }
+}
+
+// 3. Function to find occurrences of digit in a number
+int occurrence_of_number(int num, int digit) // Input the number and digit whose occurrence must be found.
+{
+   if (num > 0) // This function only works for positive integers
+   {
+      int count = 0;
+      while (num > 0)
+      {
+          if (digit == (num%10))
+          {
+              count++; // Increase count by 1 if digit is found
+          }
+          num = num / 10; // Remove last digit for next iteration
+      }
+      return count;
+   }
+   else if (num == 0)
+   {
+       if( num == digit )
+           return 1;
+       else
+           return 0;
+   }
+   else
+   {
+       return -1;
+   }
+}
+
+// 4. Function to check if given number
+int palindrome_number(int num) //return 1 if true, 0 if false.
+{
+    if (num >= 0)
+    {
+        if (num == reverse_number(num))
+            return 1;
+        else
+            return 0;
+    }
+    else
+    {
+        return -1;
+    }
+
+}
+
+// 5(a) Function to find if the number is prime or not
+int is_prime(int n)
+{
+    if(n == 1)
+    {
+        return 0;
+    }
+    else
+    {
+        /*Iteration only goes up to sqrt(n) because out of the
+        two factors at least one should be less than sqrt(n).*/
+        for(int i=2; i <= sqrt(n); i++)
+        {
+            if(n % i == 0)
+            {
+                return 0;
+            }
+        }
+        return 1;
+    }
+}
+// 5(b) Function to generate first N prime numbers
+int generate_n_prime_numbers(int n)
+{
+    if(n > 0)
+    {
+        int count = 0;
+        int num = 2;
+        printf("\n\tGenerate %d Prime Numbers: ", n);
+        while(count < n)
+        {
+            // Print the number if number is prime and increment the count
+            if( is_prime(num))
+            {
+                printf("%d ",num );
+                count ++;
+            }
+            num++;
+        }
+        printf("\n");
+        return 1;
+    }
+    else
+    {
+        return -1;
+    }
+}
+
+// 6.Function display and find the sum of the series 1+11+111+....111 up to n.
+int sum_of_series()
+{
+    int n;
+    // Initialize series and series sum to zero
+    printf("\n\tEnter the value of n : ");
+    scanf("%d", &n);
+    if(n > 0)
+    {
+        int series= 0;
+        int series_sum = 0;
+
+        //logic
+        for(int i=0; i<n; i++)
+        {
+            // Generating each element of the series
+            series = series * 10 + 1;
+
+            // Summing up generated elements
+            series_sum = series_sum + series;
+        }
+        printf("\n\tSum of the Series    : %d", series_sum);
+        return 1;
+    }
+    else
+    {
+        return -1;
+    }
+}
+
+// 7. Function that asks the user to enter a number and returns if it is Armstrong or not.
+int is_armstrong()
+{
+    int num;
+    printf("\n\tEnter a number to check if the number is Armstrong or not : ");
+    scanf("%d", &num);
+    int sum = 0;
+    int armstrong = num;
+    if (num > 0)
+    {
+        while( num > 0)
+        {
+            sum = sum + cube(num%10);
+            num = num/10;
+        }
+        if( sum == armstrong)
+        {
+            printf("\n\t%d is an Armstrong Number\n",armstrong);
             return 1;
         }
-        else
-        {
-            return 0;
-        }
+        printf("\n\t%d is not an Armstrong Number\n",armstrong);
+        return 0;
     }
     else
     {
-        return INVALID; // Return INVALID if year is negative.
+        return -1;
     }
 }
 
-// 7. Find power of 2^N using left shift operator.
-
-int power_of_2(int n)
+// function to find cube of a number
+int cube(int n)
 {
-    if (n >= 0)
+    return n*n*n;
+}
+
+// 8. Function to check whether the giver pair is amicable or not
+int is_amicable(int num1, int num2) // Return 1 if amicable else 0
+{
+    int sum1 = sum_of_proper_divisors(num2);
+    int sum2 = sum_of_proper_divisors(num1);
+    if (num1 > 0 && num2 > 0)
     {
-        return 1 << n;
+        if(num1 == sum1 && num2 == sum2)
+            return 1;
+        return 0;
+
     }
     else
     {
-        return INVALID; // Return INVALID if number is negative.
+        return -1;
     }
+}
+// Function to find sum of proper divisors
+int sum_of_proper_divisors(int num)
+{
+    int sum = 0;
+    for(int i=1; i< num ; i++)
+        {
+            if( num % i == 0)
+            {
+                sum = sum + i;
+            }
+        }
+        return sum;
+}
+
+
+// 9. Function to calculate sum, difference and product.
+int calculator()
+{
+    int num1,num2,s;
+    //number 1
+    printf("\n\tEnter number 1                 : ");
+    scanf("%d",&num1);
+
+    //number 2
+    printf("\n\tEnter number 2                 : ");
+    scanf("%d",&num2);
+
+    //Ask which operation to perform from the user
+    printf("\n\tTo find the Sum click          : 1 ");
+    printf("\n\tTo find the Difference click   : 2 ");
+    printf("\n\tTo find the Product click      : 3 ");
+    printf("\n\tEnter your Choice              : ");
+    scanf("%d",&s);
+    switch(s)
+        {
+            case 1: printf("\n\tSum                            : %d",num1+num2);
+                    break;
+            case 2: printf("\n\tDifference                     : %d",num1-num2);
+                    break;
+            case 3: printf("\n\tProduct                        : %d",num1*num2);
+                    break;
+            default:printf("\nInvalid Choice\n");
+                    return -1;
+        }
+    return 1;
+}
+// 10. Function to calculate volume of shapes.
+int volume_of_shapes(int choice)
+{
+    int cube_length; //Cube
+    int height, length, width; //Cuboid
+    int radius; //Sphere
+    int c_height, c_radius; //Cylinder
+    int cone_radius, cone_height; //Cone
+
+    switch(choice)
+    {
+
+        case 1 :
+                printf("\n\tEnter the edge length of the cube : ");
+                scanf("%d", &cube_length);
+                printf("\n\tVolume of the Cube                : %d", cube(cube_length));
+                break;
+        case 2 :
+
+                printf("\n\tEnter the height of the cuboid    : ");
+                scanf("%d", &height);
+                printf("\n\tEnter the length of the cuboid    : ");
+                scanf("%d", &length);
+                printf("\n\tEnter the width of the cuboid     : ");
+                scanf("%d", &width);
+                printf("\n\tVolume of the Cuboid              : %d", cuboid(height,length,width));
+                break;
+        case 3 :
+
+                printf("\n\tEnter the radius of the sphere    : ");
+                scanf("%d", &radius);
+                printf("\n\tVolume of the Sphere              : %d", sphere(radius));
+                break;
+        case 4 :
+
+                printf("\n\tEnter the height of the cylinder  : ");
+                scanf("%d", &c_height);
+                printf("\n\tEnter the radius of the cylinder  : ");
+                scanf("%d", &c_radius);
+                printf("\n\tVolume of the Cylinder            : %d", cylinder(c_height,c_radius));
+                break;
+        case 5 :
+                printf("\n\tEnter the height of the Cone      : ");
+                scanf("%d", &cone_height);
+                printf("\n\tEnter the radius of the cone      : ");
+                scanf("%d", &cone_radius);
+                printf("\n\tVolume of the Cone                : %d", cone(cone_height,cone_radius));
+                break;
+        default:
+                printf("\n\tInvalid Choice\n");
+                return -1;
+
+    }
+    return 1;
+}
+
+// Function to find Volume of cube
+int cube_volume(int length)
+{
+    return length * length * length;
+}
+//Function to find Volume of Cuboid
+int cuboid(int height, int length, int width)
+{
+    return height * length * width;
+}
+//Function to find Volume of Sphere
+int sphere(int radius)
+{
+    return (4/3)* PI * cube(radius);
+}
+//Function to find Volume of Cylinder
+int cylinder(int height, int radius)
+{
+    return  PI * radius * radius * height;
+}
+//Function to find Volume of Cone
+int cone(int height, int radius)
+{
+    return  (1/3)*PI * radius * radius * height;
+}
+
+// 10. Function to calculate Electricity Bill
+float electricity_bill(int units_consumed)
+{
+    float total_charges = 0;
+    if(units_consumed > 0 && units_consumed <=200)
+    {
+        total_charges = units_consumed * 1;
+    }
+    else if( units_consumed > 200 && units_consumed <= 300)
+    {
+        total_charges = 200 + (units_consumed - 200) * 1.5;
+    }
+    else if (units_consumed > 300)
+    {
+        total_charges = 200 + 150 + (units_consumed - 300) * 2;
+    }
+    else
+    {
+        printf("\n\tEnter number greater than 0 \n");
+        return -1;
+    }
+    printf("\n\tTotal Charges                     : %f\n",total_charges);
+    return total_charges;
 }
 
 
