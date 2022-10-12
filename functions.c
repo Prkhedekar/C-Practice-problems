@@ -1,137 +1,55 @@
 #include "header.h"
 #include <math.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-/*--------------------------------------Day 3----------------------------------*/
 
-// 1. WAP to convert a binary number to decimal and vice versa.
+/*--------------------------------------Day 4-5 ----------------------------------*/
 
-// Binary to Decimal
+//1. WAP to sort the given array in ascending and descending order.
 
-int binary_to_decimal(int binary_number)
+int sort_array(int arr[],int array_size, int option) //Sorts an array in ascending order if option = 0, Sorts in descending if option = 1
 {
-    int rem = 0; //to store binary bits
-    int decimal_number = 0;
-    int base = 1;
-    if(binary_number >= 0) //Only Positive Numbers
+    switch(option)
     {
-        while(binary_number > 0)
+    case 0 ://Ascending Order
+        for(int i = 0; i < array_size  ; i++)
         {
-            rem = binary_number % 10;
-            if (rem > 1) // Binary bits can hold only 1 or 0
-                return -1;
-            decimal_number = decimal_number + rem * base;
-            base = base * 2;
-            binary_number = binary_number / 10; // Remove last bit
-        }
-        return decimal_number;
-    }
-    else
-    {
-        return -1;
-    }
-}
-
-// Decimal to Binary
-
-int decimal_to_binary(int decimal_number)
-{
-    int base = 2;
-    int binary_number = 0;
-
-    if(decimal_number >= 0) // positive numbers only
-    {
-        while(decimal_number > 0)
-        {
-            binary_number = binary_number * 10 + decimal_number % base;
-            decimal_number = decimal_number / 2; //Decimal Number for next iteration
-        }
-        return binary_number;
-    }
-    else
-    {
-        return -1;
-    }
-
-}
-
-// 2. Generate a sequence of numbers such that every number in the sequence is the sum of
-//    the previous three numbers. The first three numbers are 0,0,1
-
-int generate_sum_of_previous_three_numbers(int sequence_length)
-{
-    int first = 0, second = 0, third = 1;
-    int next = 0;
-    printf("\n\tSequence Length : %d\n\tSequence :", sequence_length);
-    //Corner cases
-    if (sequence_length == 1)
-    {
-        printf(" 0\n");
-        return 1;
-    }
-
-    else if(sequence_length == 2)
-    {
-        printf(" 0 0\n");
-        return 1;
-    }
-
-    else if(sequence_length == 3)
-    {
-         printf(" 0 0 1\n");
-         return 1;
-    }
-
-    // sequence length greater than 3
-    else if(sequence_length > 3)
-    {
-        printf(" 0 0 1");
-        for( int i = sequence_length; i > 3 ; i--)
-        {
-            next = first + second + third  ;
-            printf(" %d", next);
-            first = second;
-            second = third;
-            third = next;
-        }
-        printf("\n");
-        return 1;
-    }
-    else
-    {
-        printf(" Invalid \n");
-        return -1;
-    }
-
-}
-
-// 3. WAP to print the following sketch by taking in N as number of rows
-
-/*      * * * *
-          * * *
-            * *
-              *
-*/
-
-int generate_pattern(int rows)
-{
-    int spaces = 0;
-    if( rows > 0)
-    {
-        for(int i=rows ; i > 0; i--)
-        {
-            printf("\t");
-            spaces = rows - i; // spaces to be added
-            for(int j=i; j > 0; j--)
+            for (int j=i+1; j < array_size ; j++)
             {
-                while( spaces != 0 ) // Add spaces
-                {
-                    printf("  ");
-                    spaces--;
-                }
-                printf(" *");
+                if(arr[i] > arr[j])
+                    swap_variables(&arr[i],&arr[j]);
             }
-            printf("\n");
+        }
+        return 1;
+    case 1 :
+        for(int i = 0; i < array_size  ; i++)
+        {
+            for (int j=i+1; j < array_size ; j++)
+            {
+                if(arr[i] < arr[j])
+                    swap_variables(&arr[i],&arr[j]);
+            }
+        }
+        return 1;
+    default:
+        return -1;
+    }
+
+}
+
+
+
+//Print Array
+int print_array(int arr[], int array_size)
+{
+    if (array_size != 0)
+    {
+       for (int i = 0; i < array_size; i++)
+        {
+            printf("%d ",arr[i]);
+
         }
         return 1;
     }
@@ -141,149 +59,396 @@ int generate_pattern(int rows)
     }
 }
 
-// 4. Write a C program, which will print two digit numbers whose sum of both digit is
-//    multiple of seven. e.g. 16,25,34......
 
-int two_digit_multiple_of_seven()
+
+//2. Write a program to swap two numbers using function.
+int swap_variables(int *a, int *b)
 {
-    int digit_1, digit_2, sum = 0;
-    int number = 10; // First two digit number
-    printf("\t Numbers :");
-    for(int i = number ; i < 100 ; i++ )
-    {
-        digit_1 = i % 10; // Units place
-        digit_2 = i / 10; // Tens Place
-        sum = digit_1 + digit_2 ;
-        if(sum % 7 == 0)
-            printf(" %d",i);
-    }
-    printf("\n");
+    int temp;
+    temp = *a;
+    *a = *b;
+    *b = temp;
     return 1;
 }
 
-// 5. Write a recursive function for calculating power of a number. Take base number and exponent from user.
-
-int power_using_recursion(int base,int exponent)
+//3. WAP to find minimum and maximum elements in a given array using the function int find_max_min(int array[], int size, int *max, int *min);
+int find_max_min(int array[], int size, int *max, int *min)
 {
-    if(base >= 0 && exponent >= 0 )
+    if (size != 0)
     {
-        // Base Case
-        if(exponent == 0)
-        {
-            return 1;
-        }
-        // Recursive Statement
-        else
-        {
-            return base * power_using_recursion(base,exponent-1);
-
-        }
+        sort_array(array,size,0); //Sort in Ascending order
+        *min = array[0]; // First element in the array is the smallest
+        *max = array[size -1]; //last element in the array is the largest
+        return 1;
     }
     else
     {
-        return -1; // Return -1 for invalid inputs
+        return -1;
     }
 }
 
-// 6. Write a recursive function for calculating factorial of a number.
+//4. Write a C program that take 2 integer sets A[] and b[] as input and prints results of  following set operations:
 
-int factorial_of_number_using_recursion(int number)
+// I. A Union B
+/*int set_union(int set_a[], int set_b[], int size_a, int size_b)
 {
-    if(number >= 0 )
+    int array_union[],size_union = 0;
+    if(size_a == 0 && size_b == 0)
     {
-        // Base Case
-        if(number == 0)
+        //Copy Array 1 to Union_Set
+        for(int i=0; i<size_a; i++)
         {
-            return 1;
+            array_union[size_union] ==  set_a[i];
+            size_union++;
         }
-        // Recursive Statement
-        else
+        //Copy Array 2 to Union Set
+        for(int j=0; j<size_b; j++)
         {
-            return number * factorial_of_number_using_recursion(number - 1);
+            array_union[size_union] ==  set_a[j];
+            size_union++;
+        }
+        //Remove Duplicate Elements
+        remove_duplicate_elements(array_union,&size_union);
 
+        //print
+        print_array(array_union,size_union)
+
+    }
+}
+
+int remove_duplicate_elements(int arr[], int array_size)
+{
+    if(array_size != 0)
+    {
+        for(int i=0 ; i<array_size; i++)
+        {
+            for(int j = i+1; j<array_size; j++)
+            {
+                if(arr[i] == arr[j])
+                {
+                    for(int k=j; k<array_size; k++)
+                    {
+                        arr[k] == arr[k+1];
+                    }
+                    *array_size--;
+                }
+            }
         }
+        return 1;
     }
     else
     {
-        return -1; // Return -1 for invalid inputs
+        return -1;
     }
 }
+*/
 
-//7. Use recursive calls to evaluate F(x) = x + x3/3! + x5/5! + x7/7!+ …
-
-int evaluate_function_using_recursion(int x)
+//5. WAP to store 10 numbers in an array. Remove the duplicate entries in the array
+int store_10_numbers_and_remove_duplicate()
 {
-    if(x >= 0)
+    int size = 10;
+    int arr[size];
+    printf("\tEnter 10 Numbers into the array : \n");
+    for(int i=0; i<size; i++)
     {
-        //Base Casw
+     printf("\t");
+     scanf("%d", &arr[i]);
+    }
+
+    size = remove_duplicate_elements(arr,size);
+
+    printf("\tArray after Removing Duplicate Elements is : ");
+    for(int i=0; i<size; i++)
+        printf(" %d", arr[i]);
+}
+
+int remove_duplicate_elements(int arr[], int array_size)
+{
+
+    sort_array(arr,array_size,0);
+
+    int temp_array[array_size];
+    int temp_size = 0;
+
+    if(array_size == 0 || array_size == 1)
+        return array_size;
+
+    //Works only if the array is sorted
+    for(int i = 0 ; i < array_size - 1; i++)
+    {
+        if(arr[i] != arr[i+1])
+            temp_array[temp_size++] = arr[i];
+
+    }
+    temp_array[temp_size++] == arr[array_size - 1];
+    for(int i = 0; i < temp_size ; i++)
+    {
+        arr[i] = temp_array[i];
+    }
+    return temp_size;
+}
+
+//6. WAP to search for a given integer in an array using the linear search technique.
+int linear_search(int arr[], int size_of_array, int find) //Returns index of the first element that matches the search variable, else returns -1
+{
+    if(size_of_array > 0)
+    {
+        for(int i = 0; i < size_of_array ; i++)
+        {
+            if(arr[i] == find)
+            {
+                return i;
+            }
+
+        }
+        return -1;
+    }
+    else
+    {
+        return -1;
+    }
+
+}
+
+
+//7. WAP to search for a given integer in an array using the binary search technique
+int binary_search_non_recursive(int arr[], int array_size, int search_element)//Function takes Sorted array.
+{
+
+    int low = 0;
+    int high = array_size - 1;
+    int mid;
+
+    while(high >= low)
+    {
+        mid = (low + high)/2;
+        if(arr[mid] == search_element)
+        {
+            return mid;
+        }
+        else
+        {
+            if(search_element > arr[mid])
+                low = mid +1;
+            else
+                high = mid - 1;
+
+        }
+    }
+
+    return -1;
+}
+
+//8. Write a C program, that reads list of n integer and print sum of product of consecutive
+//   numbers. if n=7 and numbers are 4,5,2,5,6,4,7 then output is
+//   4*5+5*2+2*5+5*6+6*4+4*7 = 122.
+int sum_of_product_of_consecutive_numbers(int arr[], int array_size, int n)
+{
+
+    int sum = 0;
+
+    //Move forward only if n is within array size
+    if (n <= array_size && n > 1)
+    {
+        for(int i = 0; i < n-1; i++)
+        {
+            sum = sum + arr[i]*arr[i+1];
+        }
+
+        return sum;
+    }
+    //When there is only one element
+    else if(n == 1)
+        return arr[0];
+
+
+    return -1;
+}
+
+//9. WAP to read a string from the user and find the length of string.( Note: Do not use string.h header file)
+int string_length(char *str)//Returns length of the string
+{
+    int len = 0;
+    for(int i=0; str[i] != '\0'; i++)
+        len++;
+    return len;
+
+}
+
+//10.Input date, month and year from the user, and using switch case, display in
+//   worded format. e.g. input: d=16, m=7, y=1992
+//   Output: 16th July, 1992
+int date_in_worded_format(int day, int month, int year)
+{
+    //Day Corner Case
+    if(day > 31 || day < 1)
+        return -1;
+    //Day
+    printf("\tDate : ");
+    switch(day)
+    {
+        //postfix "st"
+        case 1:
+        case 21:
+        case 31:printf("%dst ",day);
+                break;
+        //postfix "nd"
+        case 2:
+        case 22:printf("%dnd ",day);
+                break;
+        //postfix "rd"
+        case 3:
+        case 23:printf("%drd ",day);
+                break;
+        //postfix "th"
+        default:printf("%dth ",day);
+                break;
+
+    }
+    //Month Corner Cases
+    if(month > 12 || month < 1)
+        return -1;
+    //Month
+    switch(month)
+    {
+        case 1: printf("January, ");break;
+        case 2: printf("February, ");break;
+        case 3: printf("March, ");break;
+        case 4: printf("April, ");break;
+        case 5: printf("May, ");break;
+        case 6: printf("June, ");break;
+        case 7: printf("July, ");break;
+        case 8: printf("August, ");break;
+        case 9: printf("September, ");break;
+        case 10:printf("October, ");break;
+        case 11:printf("November, ");break;
+        case 12:printf("December, ");break;
+    }
+    //year corner case
+    if(year < 0)
+        return -1;
+    //year
+    printf("%d\n",year);
+    return 1;
+}
+
+//11. Write a function that will scan a character string passed as an argument and convert
+//    all lower-case characters into their upper-case equivalents.
+int convert_string_case(char *str)
+{
+    for(int i = 0; str[i]!='\0'; i++)
+    {
+        if(str[i] >= 'a' && str[i] <= 'z')
+        str[i] = str[i] - 32;
+    }
+    return 1;
+
+}
+
+//12. Write a program to read a string from the user and reverse the string.( Note: Do not use string.h header file)
+int reverse_string(char *str)
+{
+    char temp;
+    int len = string_length(str);
+    for (int i = 0; i < len/2; i++)
+    {
+        // rev variable use to temporary hold the string
+        temp = str[i];
+        str[i] = str[len - i - 1];
+        str[len -i -1] = temp;
+    }
+  return 1;
+}
+
+//13. WAP to construct 5 * 5 matrix and display the contents. Use functions for construction and display of matrix.
+int display_matrix(int *arr, int row, int col)
+{
+    printf("\t");
+    for(int i = 0; i < row ; i++ )
+    {
+        for (int j = 0; j < col ; j++)
+        {
+            printf("%d\t", *((arr+i*col)+j));
+        }
+        printf("\n\t");
+    }
+    return 1;
+}
+
+//14. WAP to add 2 matrices.
+int add_matrices(int *mat1, int *mat2, int row, int col)
+{
+    //Corner case
+    if(row <= 0 || col <= 0)
+        return -1;
+
+
+    int sum[row][col];
+    printf("\tMatrix 1\n");
+    display_matrix((int *)mat1,row,col);
+    printf("\n");
+    printf("\tMatrix 2\n");
+    display_matrix((int *)mat2,row,col);
+
+    //Find Sum
+    for(int i=0 ; i< row;  i++)
+    {
+        for(int j=0 ; j< col; j++)
+        {
+            sum[i][j] = *((mat1+i*col)+j) + *((mat2+i*col)+j);
+        }
+    }
+
+    //Display Sum
+    printf("\n\tSum\n");
+    display_matrix((int *)sum,row,col);
+    return 1;
+
+}
+
+//15. WAP to check whether 2 matrices are same.
+int check_if_identical_matrix(int *mat1, int *mat2, int row, int col)//Returns 1 if matrices are identical, return 0 otherwise
+{
+    if(row <= 0 || col <= 0)
+        return -1;
+    for(int i=0 ; i< row;  i++)
+    {
+        for(int j=0 ; j< col; j++)
+        {
+             if(*((mat1+i*col)+j) != *((mat2+i*col)+j))
+                return 0;
+        }
+    }
+    return 1;
+
+}
+
+//16. WAP program to check if given matrix is a sparse matrix. If the number of zeros in a
+//    matrix exceeds (n*m)/2, where n, m is the dimension of the matrix, matrix is sparse
+//    matrix. Sparse matrix has more zero elements than nonzero elements.
+
+int is_sparse_matrix(int *mat1, int row, int col) //Return 1 if matrix is sparse, Return 0 if not.
+{
+    //Corner case
+    if(row <= 0 || col <= 0)
+        return -1;
+
+    int zero_count = 0;
+    int mid = (row*col)/2;
+
+     //Check if Matrix is sparse
+    for(int i=0 ; i< row;  i++)
+    {
+        for(int j=0 ; j< col; j++)
+        {
+             if(*((mat1+i*col)+j)  == 0)
+             {
+                 zero_count++;
+                 if(zero_count > mid)
+                    return 1;
+             }
+
+        }
     }
     return 0;
-}
-
-//8. Concatenate two integer values using macros
-//Macro function defined in header file
-
-//9. Find square of a number using macros
-//Macro function defined in header file
-
-//10. Write a menu driven program to display the mathematical functions like square root, natural log, log10x, power(x,n), Cos(x). (use math.h)
-int mathematical_functions()
-{
-    double base,exponent;
-    double cos_x,sqrt_x,nlog_x,log_x;
-    int choice;
-
-    //Display to the user
-    printf("\n\tMathematical Functions\n");
-    printf("\n\tSelect 1 to find square root(x) ");
-    printf("\n\tSelect 2 to find natural log(x) ");
-    printf("\n\tSelect 3 to find log10(x)       ");
-    printf("\n\tSelect 4 to find power(x,n)     ");
-    printf("\n\tSelect 5 to find cos(x)         ");
-    printf("\n\tEnter your choice          : ");
-    scanf("%d",&choice);
-
-    //switch implementation
-    switch(choice)
-    {
-    case 1: printf("\n\tSquareRoot(x) ");
-            printf("\n\tEnter value of x           : ");
-            scanf("%lf",&sqrt_x);
-            printf("\n\tSquare Root of %lf  = %lf",sqrt_x,sqrt(sqrt_x));
-            printf("\n");
-            return 1;
-            break;
-    case 2: printf("\n\tNatural Log ");
-            printf("\n\tEnter value of x           : ");
-            scanf("%lf",&nlog_x);
-            printf("\n\tNatural log of %lf  = %lf",nlog_x,log(nlog_x));
-            return 1;
-            break;
-    case 3: printf("\n\tlog10(x) ");
-            printf("\n\tEnter value of x           : ");
-            scanf("%lf",&log_x);
-            printf("\n\tlog10 of %lf  = %lf",log_x,log10(log_x));
-            printf("\n");
-            return 1;
-            break;
-    case 4: printf("\n\tpower(base,exponent)");
-            printf("\n\tEnter base number          : ");
-            scanf("%lf",&base);
-            printf("\n\tEnter exponent             : ");
-            scanf("%lf",&exponent);
-            printf("\n\t%lf to the power %lf = %lf",base,exponent,pow(base,exponent));
-            printf("\n");
-            return 1;
-            break;
-    case 5: printf("\n\tCos(x)");
-            printf("\n\tEnter value of x           : ");
-            scanf("%lf",&cos_x);
-            printf("\n\tcos(%lf) = %lf",cos_x,cos(cos_x));
-            printf("\n");
-            return 1;
-            break;
-    default:printf("\n\\tEnter valid choice \n");
-            return -1;
-
-    }
 }

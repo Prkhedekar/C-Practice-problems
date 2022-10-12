@@ -2,20 +2,29 @@
 #define INVALID -1
 #define TRUE 1
 #define FALSE 0
+#define SIZE 5
+#define ROW 5
+#define COL 5
 
-//8. Concatenate two integer values using macros
-#define CONCATENATE_INTEGER(X,Y) X##Y
-
-//9. Find square of a number using macros.
-#define SQUARE_USING_MACRO(X) X*X
+/*--------------------------------------Day 4-5 ----------------------------------*/
 
 
-/*--------------------------------------Day 3----------------------------------*/
-int binary_to_decimal(int binary_number);
-int decimal_to_binary(int decimal_number);
-int generate_sum_of_previous_three_numbers(int sequence_length);
-int generate_pattern(int rows);
-int two_digit_multiple_of_seven();
-int power_using_recursion(int base,int exponent);
-int factorial_of_number_using_recursion(int number);
-int mathematical_functions();
+
+int swap_variables(int *a, int *b);
+int length_of_array(int arr[]);
+
+int print_array(int arr[], int array_size);
+int find_max_min(int array[], int size, int *max, int *min);
+int union_set(int set_a[], int set_b[], int size_a, int size_b);
+int linear_search(int arr[], int size_of_array, int find);
+int sort_array(int arr[],int array_size, int option);
+int remove_duplicate_elements(int arr[], int size);
+int store_10_numbers_and_remove_duplicate();
+int binary_search_non_recursive(int arr[], int array_size, int search_element);
+int sum_of_product_of_consecutive_numbers(int arr[], int array_size, int n);
+int string_length(char *str);
+int date_in_worded_format(int day, int month, int year);
+int convert_string_case(char *str);
+int reverse_string(char *str);
+int display_matrix(int *arr,int row, int col);
+int add_matrices(int *mat1, int *mat2, int row, int col);
